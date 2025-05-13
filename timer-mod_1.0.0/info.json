@@ -1,0 +1,9 @@
+{
+  "name": "timer-mod",
+  "version": "1.0",
+  "title": "TimerMod",
+  "author": "Dor&Idan",
+  "description": "'I want to play for only half an hour'. This mod allows you to set the boundary.",
+  "factorio_version": "1.1",
+  "dependencies": ["base"]
+}
