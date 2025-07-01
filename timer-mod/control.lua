@@ -38,7 +38,7 @@ local function maybe_print_time_passed(total_seconds_passed, total_minutes_passe
   end
 end
 
-local function maybe_print_end_game(total_seconds_passed, total_minutes_passed, time_to_play_minutes)
+local function maybe_print_end_game(total_minutes_passed, time_to_play_minutes)
   if total_minutes_passed == time_to_play_minutes then
     local hours_passed = math.floor(total_minutes_passed / 60)
     local minutes_passed = total_minutes_passed % 60
@@ -75,6 +75,6 @@ script.on_event(defines.events.on_tick, function(event)
   local total_seconds_passed = global.ticker / 60
   local total_minutes_passed = total_seconds_passed / 60
 
-  maybe_print_time_passed(total_seconds_passed, total_minutes_passed, global.setting__print_interval_minutes)
-  maybe_print_end_game(total_seconds_passed, total_minutes_passed, global.setting__time_to_play_minutes)
+  maybe_print_time_passed(total_seconds_passed, total_minutes_passed, global.setting__print_interval_minutes, event.tick)
+  maybe_print_end_game(total_minutes_passed, global.setting__time_to_play_minutes)
 end)
