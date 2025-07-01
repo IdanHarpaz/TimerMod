@@ -31,7 +31,9 @@ end
 --   -- storage.is_paused = false
 -- end
 
-local function maybe_print_init_message(time_to_play_minutes)
+local function maybe_print_init_message()
+  local time_to_play_minutes = settings.global["game-time-minutes"].value
+
   if time_to_play_minutes ~= nil then
     game.print(string.format("Welcome! Time allowed: %s. Have fun!", minutes_to_str(time_to_play_minutes)))
   else
@@ -40,13 +42,17 @@ local function maybe_print_init_message(time_to_play_minutes)
   end
 end
 
-local function maybe_print_time_passed(total_seconds_passed, total_minutes_passed, interval_minutes, game_tick)
+local function maybe_print_time_passed(total_seconds_passed, total_minutes_passed, game_tick)
+  local interval_minutes = settings.global["print-interval-minutes"].value
+
   if math.floor(total_seconds_passed) % (interval_minutes * 60) == 0 then
     game.print(string.format("time passed: %s (game tick: %d)", minutes_to_str(total_minutes_passed), game_tick))
   end
 end
 
-local function maybe_print_end_game(total_minutes_passed, time_to_play_minutes)
+local function maybe_print_end_game(total_minutes_passed)
+  local time_to_play_minutes = settings.global["game-time-minutes"].value
+
   if total_minutes_passed == time_to_play_minutes then
     local hours_passed = math.floor(total_minutes_passed / 60)
     local minutes_passed = total_minutes_passed % 60
@@ -70,10 +76,7 @@ end)
 -- player-enter-game init
 script.on_event(defines.events.on_player_joined_game, function(event)
   global.ticker = 0
-  global.setting__time_to_play_minutes = settings.get_player_settings(event.player_index)["game-time-minutes"].value
-  global.setting__print_interval_minutes = settings.global["print-interval-minutes"].value
-
-  maybe_print_init_message(global.setting__time_to_play_minutes)
+  maybe_print_init_message()
 end)
 
 -- time-counting
@@ -83,6 +86,6 @@ script.on_event(defines.events.on_tick, function(event)
   local total_seconds_passed = global.ticker / 60
   local total_minutes_passed = total_seconds_passed / 60
 
-  maybe_print_time_passed(total_seconds_passed, total_minutes_passed, global.setting__print_interval_minutes, event.tick)
-  maybe_print_end_game(total_minutes_passed, global.setting__time_to_play_minutes)
+  maybe_print_time_passed(total_seconds_passed, total_minutes_passed, event.tick)
+  maybe_print_end_game(total_minutes_passed)
 end)
