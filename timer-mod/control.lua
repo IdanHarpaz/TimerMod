@@ -62,13 +62,13 @@ function minutes_to_str(m)
 end
 
 function save()
-  auto_save()
+  game.print("Saving game")
+  game.auto_save()
+  game.print("Saving game finished successfully")
 end
 
 function pause_game()
-  game.print("Saving game")
   save()
-  game.print("Saving game finished successfully")
 
   game.print("Pausing game")
   game.tick_paused = true
