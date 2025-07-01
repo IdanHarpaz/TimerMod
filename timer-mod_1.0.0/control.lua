@@ -1,29 +1,30 @@
+-- global game init
 script.on_init(function()
   global.ticker = 0
 end)
 
+-- player-enter-game init
+script.on_event(defines.events.on_player_joined_game, function(event)
+  global.ticker = 0
+  global.setting__time_to_play_minutes = settings.get_player_settings(event.player_index)["game-time-minutes"].value
+
+  maybe_print_init_message(global.setting__time_to_play_minutes)
+end)
+
+-- time-counting
 script.on_event(defines.events.on_tick, function(event)
   global.ticker = global.ticker + 1
+
   seconds_passed = global.ticker / 60
   minutes_passed = seconds_passed / 60
 
-  if math.floor(seconds_passed) % (5 * 60) == 0 then
-    game.print(string.format("time passed: %s", minutes_to_str(minutes_passed)))
-  end
-  if minutes_passed == global.time_to_play then
-  	game.print("END THE GAME!!!")
-  	-- end_menu(minutes_passed)
-  end
+  maybe_print_time_passed(seconds_passed, minutes_passed, 5)
+  maybe_print_end_game(seconds_passed, minutes_passed, global.setting__time_to_play_minutes)
 end)
 
-script.on_event(defines.events.on_player_joined_game, function(event)
-  global.ticker = 0
-  global.time_to_play = settings.get_player_settings(event.player_index)["game-time-minutes"].value
-
-  if global.time_to_play ~= nil then
-  	game.print(string.format("time allowed: %s", minutes_to_str(global.time_to_play)))
-  end
-end)
+-- 
+-- Utils
+-- 
 
 -- function end_menu(minutes_passed)
 --   hours_passed = math.floor(minutes_passed / 60)
@@ -32,6 +33,27 @@ end)
 --   point_to = {type="nowhere"}
   -- style = idk what style but it has to be type speech bubble
   -- wrapper_frame_style = idk what style but it has to be type speech bubble
+
+function maybe_print_init_message(time_to_play_minutes)
+  if time_to_play_minutes ~= nil then
+    game.print(string.format("Welcome! Time allowed: %s. Have fun!", minutes_to_str(time_to_play_minutes)))
+  else
+    -- todo: add `skip_empty_time_limit_message`. If true: skip this print
+    game.print("Welcome! No game time limit set. Have fun!")
+  end
+end
+
+function maybe_print_time_passed(seconds_passed, minutes_passed, interval_minutes)
+  if math.floor(seconds_passed) % (interval_minutes * 60) == 0 then
+    game.print(string.format("time passed: %s", minutes_to_str(minutes_passed)))
+  end
+end
+
+function maybe_print_end_game(seconds_passed, minutes_passed, time_to_play_minutes)
+  if minutes_passed == time_to_play_minutes then
+    game.print("END THE GAME!!!")
+    -- end_menu(minutes_passed)
+  end
 
 function minutes_to_str(m)
   minutes = m % 60
