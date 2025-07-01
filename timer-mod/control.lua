@@ -32,16 +32,16 @@ local function maybe_print_init_message(time_to_play_minutes)
   end
 end
 
-local function maybe_print_time_passed(seconds_passed, minutes_passed, interval_minutes)
-  if math.floor(seconds_passed) % (interval_minutes * 60) == 0 then
-    game.print(string.format("time passed: %s", minutes_to_str(minutes_passed)))
+local function maybe_print_time_passed(total_seconds_passed, total_minutes_passed, interval_minutes)
+  if math.floor(total_seconds_passed) % (interval_minutes * 60) == 0 then
+    game.print(string.format("time passed: %s", minutes_to_str(total_minutes_passed)))
   end
 end
 
-local function maybe_print_end_game(seconds_passed, minutes_passed, time_to_play_minutes)
-  if minutes_passed == time_to_play_minutes then
-    local hours_passed = math.floor(minutes_passed / 60)
-    local minutes_passed = minutes_passed % 60
+local function maybe_print_end_game(total_seconds_passed, total_minutes_passed, time_to_play_minutes)
+  if total_minutes_passed == time_to_play_minutes then
+    local hours_passed = math.floor(total_minutes_passed / 60)
+    local minutes_passed = total_minutes_passed % 60
     game.print(string.format("Time played: %d:%d\nyou have played enough and it is time to rest.", hours_passed, minutes_passed))
 
     game.print("END THE GAME!!!")
@@ -72,9 +72,9 @@ end)
 script.on_event(defines.events.on_tick, function(event)
   global.ticker = global.ticker + 1
 
-  local seconds_passed = global.ticker / 60
-  local minutes_passed = seconds_passed / 60
+  local total_seconds_passed = global.ticker / 60
+  local total_minutes_passed = total_seconds_passed / 60
 
-  maybe_print_time_passed(seconds_passed, minutes_passed, global.setting__print_interval_minutes)
-  maybe_print_end_game(seconds_passed, minutes_passed, global.setting__time_to_play_minutes)
+  maybe_print_time_passed(total_seconds_passed, total_minutes_passed, global.setting__print_interval_minutes)
+  maybe_print_end_game(total_seconds_passed, total_minutes_passed, global.setting__time_to_play_minutes)
 end)
