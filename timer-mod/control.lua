@@ -32,9 +32,9 @@ local function maybe_print_init_message(time_to_play_minutes)
   end
 end
 
-local function maybe_print_time_passed(total_seconds_passed, total_minutes_passed, interval_minutes)
+local function maybe_print_time_passed(total_seconds_passed, total_minutes_passed, interval_minutes, game_tick)
   if math.floor(total_seconds_passed) % (interval_minutes * 60) == 0 then
-    game.print(string.format("time passed: %s", minutes_to_str(total_minutes_passed)))
+    game.print(string.format("time passed: %s (game tick: %d)", minutes_to_str(total_minutes_passed), game_tick))
   end
 end
 
