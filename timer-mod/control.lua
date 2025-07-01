@@ -13,15 +13,15 @@ local function pause_game()
   game.print("Pausing game")
 
   game.tick_paused = true
-  storage.is_paused = true
+  -- storage.is_paused = true
 end
 
-local function resume_game()
-  game.print("Resuming game")
+-- local function resume_game()
+--   game.print("Resuming game")
 
-  game.tick_paused = false
-  storage.is_paused = false
-end
+--   game.tick_paused = false
+--   -- storage.is_paused = false
+-- end
 
 local function maybe_print_init_message(time_to_play_minutes)
   if time_to_play_minutes ~= nil then
