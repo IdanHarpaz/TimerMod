@@ -7,6 +7,7 @@ end)
 script.on_event(defines.events.on_player_joined_game, function(event)
   global.ticker = 0
   global.setting__time_to_play_minutes = settings.get_player_settings(event.player_index)["game-time-minutes"].value
+  global.setting__print_interval_minutes = settings.global["print-interval-minutes"].value
 
   maybe_print_init_message(global.setting__time_to_play_minutes)
 end)
@@ -18,7 +19,7 @@ script.on_event(defines.events.on_tick, function(event)
   seconds_passed = global.ticker / 60
   minutes_passed = seconds_passed / 60
 
-  maybe_print_time_passed(seconds_passed, minutes_passed, 5)
+  maybe_print_time_passed(seconds_passed, minutes_passed, global.setting__print_interval_minutes)
   maybe_print_end_game(seconds_passed, minutes_passed, global.setting__time_to_play_minutes)
 end)
 
