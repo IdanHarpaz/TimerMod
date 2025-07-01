@@ -10,10 +10,12 @@ local function minutes_to_str(m)
 end
 
 local function pause_game()
-  game.print("Pausing game")
+  save()
 
+  game.print("Pausing game")
   game.tick_paused = true
   -- storage.is_paused = true
+  game.print("Done pausing game")
 end
 
 -- local function resume_game()
@@ -22,6 +24,12 @@ end
 --   game.tick_paused = false
 --   -- storage.is_paused = false
 -- end
+
+local function save()
+  game.print("Saving game")
+  game.auto_save()
+  game.print("Saving game finished successfully")
+end
 
 local function maybe_print_init_message(time_to_play_minutes)
   if time_to_play_minutes ~= nil then
