@@ -27,14 +27,6 @@ end)
 -- Utils
 --
 
--- function end_menu(minutes_passed)
---   hours_passed = math.floor(minutes_passed / 60)
---   minutes_passed = minutes_passed % 60
---   txet = string.format("Time played: %d:%d\nyou have played enough and it is time to rest.", hours_passed, minutes_passed)
---   point_to = {type="nowhere"}
-  -- style = idk what style but it has to be type speech bubble
-  -- wrapper_frame_style = idk what style but it has to be type speech bubble
-
 function maybe_print_init_message(time_to_play_minutes)
   if time_to_play_minutes ~= nil then
     game.print(string.format("Welcome! Time allowed: %s. Have fun!", minutes_to_str(time_to_play_minutes)))
@@ -52,8 +44,14 @@ end
 
 function maybe_print_end_game(seconds_passed, minutes_passed, time_to_play_minutes)
   if minutes_passed == time_to_play_minutes then
+
+  hours_passed = math.floor(minutes_passed / 60)
+  minutes_passed = minutes_passed % 60
+    game.print(string.format("Time played: %d:%d\nyou have played enough and it is time to rest.", hours_passed, minutes_passed))
+
     game.print("END THE GAME!!!")
-    -- end_menu(minutes_passed)
+
+    pause_game()
   end
 end
 
@@ -62,4 +60,18 @@ function minutes_to_str(m)
   hours = math.floor(m / 60)
 
   return string.format("%2dh:%2dm", hours, minutes)
+end
+
+function pause_game()
+    game.print("Pausing game")
+
+  game.tick_paused = true
+  storage.is_paused = true
+end
+
+function resume_game()
+    game.print("Resuming game")
+
+  game.tick_paused = false
+  storage.is_paused = false
 end
