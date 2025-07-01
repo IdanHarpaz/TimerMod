@@ -4,3 +4,10 @@ Date: 2024.04.07
     - Initial release
   Locale:
     - English
+
+Version: 1.1.0
+Date: 2025.07.01
+  Info:
+    - Add setting to control print interval
+  Locale:
+    - English
