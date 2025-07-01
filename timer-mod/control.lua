@@ -61,11 +61,19 @@ function minutes_to_str(m)
   return string.format("%2dh:%2dm", hours, minutes)
 end
 
-function pause_game()
-  game.print("Pausing game")
+function save()
+  auto_save()
+end
 
+function pause_game()
+  game.print("Saving game")
+  save()
+  game.print("Saving game finished successfully")
+
+  game.print("Pausing game")
   game.tick_paused = true
   storage.is_paused = true
+  game.print("Pausing game finished successfully")
 end
 
 function resume_game()
