@@ -44,9 +44,8 @@ end
 
 function maybe_print_end_game(seconds_passed, minutes_passed, time_to_play_minutes)
   if minutes_passed == time_to_play_minutes then
-
-  hours_passed = math.floor(minutes_passed / 60)
-  minutes_passed = minutes_passed % 60
+    hours_passed = math.floor(minutes_passed / 60)
+    minutes_passed = minutes_passed % 60
     game.print(string.format("Time played: %d:%d\nyou have played enough and it is time to rest.", hours_passed, minutes_passed))
 
     game.print("END THE GAME!!!")
@@ -63,14 +62,14 @@ function minutes_to_str(m)
 end
 
 function pause_game()
-    game.print("Pausing game")
+  game.print("Pausing game")
 
   game.tick_paused = true
   storage.is_paused = true
 end
 
 function resume_game()
-    game.print("Resuming game")
+  game.print("Resuming game")
 
   game.tick_paused = false
   storage.is_paused = false
