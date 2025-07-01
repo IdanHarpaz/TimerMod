@@ -42,10 +42,11 @@ local function maybe_print_init_message()
   end
 end
 
-local function maybe_print_time_passed(total_seconds_passed, total_minutes_passed, game_tick)
+local function maybe_print_time_passed(total_minutes_passed, game_tick)
   local interval_minutes = settings.global["print-interval-minutes"].value
+  local minutes_passed_double = global.ticker / (60*60)
 
-  if math.floor(total_seconds_passed) % (interval_minutes * 60) == 0 then
+  if minutes_passed_double == interval_minutes then
     game.print(string.format("time passed: %s (game tick: %d)", minutes_to_str(total_minutes_passed), game_tick))
   end
 end
@@ -86,6 +87,6 @@ script.on_event(defines.events.on_tick, function(event)
   local total_seconds_passed = global.ticker / 60
   local total_minutes_passed = total_seconds_passed / 60
 
-  maybe_print_time_passed(total_seconds_passed, total_minutes_passed, event.tick)
+  maybe_print_time_passed(total_minutes_passed, event.tick)
   maybe_print_end_game(total_minutes_passed)
 end)
