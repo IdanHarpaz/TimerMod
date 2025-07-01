@@ -33,12 +33,13 @@ repos:
         files: \.json$
         args: ["--parser", "json", "--print-width", "120", "--tab-width", "4"]
 
-#  - repo: https://github.com/Calinou/pre-commit-luacheck
-#    rev: v1.0.0
-#    hooks:
-#      - id: luacheck
+  - repo: https://github.com/Calinou/pre-commit-luacheck
+    rev: v1.0.0
+    hooks:
+      - id: luacheck
 ###
-# luacheck doesn't pass yet
+# config file location
+# https://github.com/Nexela/Factorio-luacheckrc/raw/master/.luacheckrc
 #
 # to run manually:
 # PATH=$PATH:~/.luarocks/bin pre-commit run --all-files
