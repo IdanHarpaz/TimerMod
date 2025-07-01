@@ -22,9 +22,9 @@ script.on_event(defines.events.on_tick, function(event)
   maybe_print_end_game(seconds_passed, minutes_passed, global.setting__time_to_play_minutes)
 end)
 
--- 
+--
 -- Utils
--- 
+--
 
 -- function end_menu(minutes_passed)
 --   hours_passed = math.floor(minutes_passed / 60)
@@ -54,6 +54,7 @@ function maybe_print_end_game(seconds_passed, minutes_passed, time_to_play_minut
     game.print("END THE GAME!!!")
     -- end_menu(minutes_passed)
   end
+end
 
 function minutes_to_str(m)
   minutes = m % 60
